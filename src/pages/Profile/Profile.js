@@ -4,18 +4,47 @@ import { Container, Box, Typography, Button } from "@material-ui/core";
 import { Field, Form, Formik } from "formik";
 import { TextField } from "formik-material-ui";
 import * as yup from "yup";
+import emailjs from "emailjs-com";
+import { useHistory } from "react-router";
 
 import "./Profile.css";
 
 const Profile = () => {
+  const history = useHistory();
   const { userData } = useContext(UserDataContext);
   console.log(userData);
 
-  const emailSchema = yup.object().shape({
+  const emailSchema = yup.object({
     name: yup.string().required(),
     email: yup.string().email().required(),
     message: yup.string().required(),
   });
+
+  function sendEmail(values, helpers) {
+    try {
+      emailjs
+        .sendForm(
+          "emailteste",
+          "template_3lag6j6",
+          values,
+          "user_ls2lNkhJgIl8pf4VTayC1"
+        )
+        .then(
+          (result) => {
+            alert("Mensagem enviada com sucesso! 👍");
+            console.log(result.text);
+          },
+          (error) => {
+            alert(error.message);
+          }
+        );
+      console.log("done");
+    } catch (error) {
+      console.log(error);
+    }
+
+    return
+  }
 
   return (
     <div className="App">
@@ -32,37 +61,43 @@ const Profile = () => {
               message: "",
             }}
             validationSchema={emailSchema}
-            onSubmit={() => console.log("email enviado")}
+            onSubmit={sendEmail}
           >
-            <Form>
-              <Box paddingBottom={2}>
-                <Field
-                  fullWidth
-                  name="name"
-                  component={TextField}
-                  label="Name"
-                />
-              </Box>
-              <Box paddingBottom={2}>
-                <Field
-                  fullWidth
-                  name="email"
-                  component={TextField}
-                  label="Email"
-                />
-              </Box>
-              <Box paddingBottom={2}>
-                <Field
-                  fullWidth
-                  name="message"
-                  component={TextField}
-                  label="Message"
-                />
-              </Box>
-              <Button color="primary" variant="contained" type="submit">
-                Enviar
-              </Button>
-            </Form>
+            {({ sendEmail }) => (
+              <Form noValidate onSubmit={sendEmail}>
+                <Box paddingBottom={2}>
+                  <Field
+                    fullWidth
+                    name="name"
+                    component={TextField}
+                    label="Name"
+                  />
+                </Box>
+                <Box paddingBottom={2}>
+                  <Field
+                    fullWidth
+                    name="email"
+                    component={TextField}
+                    label="Email"
+                  />
+                </Box>
+                <Box paddingBottom={2}>
+                  <Field
+                    fullWidth
+                    name="message"
+                    component={TextField}
+                    label="Message"
+                  />
+                </Box>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  type="submit"
+                >
+                  Enviar
+                </Button>
+              </Form>
+            )}
           </Formik>
         </Box>
       </Container>
