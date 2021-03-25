@@ -23,7 +23,7 @@ const Profile = () => {
   function sendEmail(values, helpers) {
     try {
       emailjs
-        .sendForm(
+        .send(
           "emailteste",
           "template_3lag6j6",
           values,
@@ -43,7 +43,7 @@ const Profile = () => {
       console.log(error);
     }
 
-    return
+    helpers.resetForm()
   }
 
   return (
@@ -63,41 +63,35 @@ const Profile = () => {
             validationSchema={emailSchema}
             onSubmit={sendEmail}
           >
-            {({ sendEmail }) => (
-              <Form noValidate onSubmit={sendEmail}>
-                <Box paddingBottom={2}>
-                  <Field
-                    fullWidth
-                    name="name"
-                    component={TextField}
-                    label="Name"
-                  />
-                </Box>
-                <Box paddingBottom={2}>
-                  <Field
-                    fullWidth
-                    name="email"
-                    component={TextField}
-                    label="Email"
-                  />
-                </Box>
-                <Box paddingBottom={2}>
-                  <Field
-                    fullWidth
-                    name="message"
-                    component={TextField}
-                    label="Message"
-                  />
-                </Box>
-                <Button
-                  color="primary"
-                  variant="contained"
-                  type="submit"
-                >
-                  Enviar
-                </Button>
-              </Form>
-            )}
+            <Form noValidate>
+              <Box paddingBottom={2}>
+                <Field
+                  fullWidth
+                  name="name"
+                  component={TextField}
+                  label="Name"
+                />
+              </Box>
+              <Box paddingBottom={2}>
+                <Field
+                  fullWidth
+                  name="email"
+                  component={TextField}
+                  label="Email"
+                />
+              </Box>
+              <Box paddingBottom={2}>
+                <Field
+                  fullWidth
+                  name="message"
+                  component={TextField}
+                  label="Message"
+                />
+              </Box>
+              <Button color="primary" variant="contained" type="submit">
+                Enviar
+              </Button>
+            </Form>
           </Formik>
         </Box>
       </Container>
