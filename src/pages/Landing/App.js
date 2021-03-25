@@ -6,12 +6,19 @@ import {
 } from "../../config/authMethod";
 import socialMediaAuth from "../../service/auth";
 import { Container, Button, Box, Typography } from "@material-ui/core";
-import {Facebook, GitHub, Mail, } from '@material-ui/icons'
+import { Facebook, GitHub, Mail } from "@material-ui/icons";
+import { useHistory } from "react-router-dom";
+import { useContext } from "react";
+import { UserDataContext } from "../../context/UserDataContext";
 
 function App() {
+  const history = useHistory();
+  const { setUserData } = useContext(UserDataContext);
+
   const handleOnClick = async (provider) => {
     const res = await socialMediaAuth(provider);
-    console.log(res);
+    setUserData(res);
+    history.push("/profile");
   };
 
   return (
@@ -29,8 +36,8 @@ function App() {
           >
             Facebook
           </Button>
-          <Button      
-            startIcon={<GitHub />} 
+          <Button
+            startIcon={<GitHub />}
             variant="contained"
             onClick={() => handleOnClick(githubProvider)}
           >
