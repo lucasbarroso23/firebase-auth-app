@@ -3,9 +3,9 @@ import {
   facebookProvider,
   githubProvider,
   googleProvider,
-} from "./config/authMethod";
-import socialMediaAuth from "./service/auth";
-import { Container, Button, Box, Typography, Icon } from "@material-ui/core";
+} from "../../config/authMethod";
+import socialMediaAuth from "../../service/auth";
+import { Container, Button, Box, Typography } from "@material-ui/core";
 import {Facebook, GitHub, Mail, } from '@material-ui/icons'
 
 function App() {
