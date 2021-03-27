@@ -13,6 +13,7 @@ import { TextField } from "formik-material-ui";
 import * as yup from "yup";
 import emailjs from "emailjs-com";
 import { useHistory } from "react-router";
+import Swal from 'sweetalert2';
 
 import "./Profile.css";
 
@@ -38,11 +39,20 @@ const Profile = () => {
         )
         .then(
           (result) => {
-            alert("Mensagem enviada com sucesso! 👍");
+            Swal.fire({
+              icon: 'success',
+              title: 'Awesome...',
+              text: 'Your message was sent!',
+            })
             console.log(result.text);
           },
           (error) => {
-            alert(error.message);
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Something went wrong!',
+              footer: error.text,
+            })
           }
         );
       console.log("done");
